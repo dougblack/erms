@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Username:</b>
+  <%= @governmentagency.username %>
+</p>
+
+<p>
+  <b>Jurisdiction:</b>
+  <%= @governmentagency.jurisdiction %>
+</p>
+
+
+<%= link_to 'Edit', edit_governmentagency_path(@governmentagency) %> |
+<%= link_to 'Back', governmentagencies_path %>

@@ -1,0 +1,25 @@
+<%= form_for(@addesf) do |f| %>
+  <% if @addesf.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@addesf.errors.count, "error") %> prohibited this addesf from being saved:</h2>
+
+      <ul>
+      <% @addesf.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :resource %><br />
+    <%= f.text_field :resource %>
+  </div>
+  <div class="field">
+    <%= f.label :esf %><br />
+    <%= f.text_field :esf %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

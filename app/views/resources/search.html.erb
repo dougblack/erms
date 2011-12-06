@@ -1,0 +1,19 @@
+<%= form_tag "/resources/search_results" do %>
+	<div class="field">
+		<%= label_tag "Keyword" %>
+		<%= text_field_tag :keyword %>
+	</div>
+	<div class ="field">
+		<%= label_tag "ESF" %>
+		<%= select(:all, :esf_id, Esf.all.collect {|e| [e.description, e.id]}, :include_blank => true) %>
+	</div>
+	<div class="field">
+		<%= label_tag "Distance away" %>
+		<%= text_field_tag :distance %>
+	</div>
+	<div class="field">
+		<%= label_tag "Incident" %>
+		<%= select(:all, :incident_id, Incident.all.collect{|i| [i.description, i.id]}, :include_blank => true) %>
+	</div>
+	<div class="button"><%= submit_tag "Search!" %></div>
+<% end %>

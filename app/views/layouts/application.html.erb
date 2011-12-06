@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Erms</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="header"><div style="float:left"><a href="/">ERMS</a></div>
+<div style="float:right">
+<% if current_user %>
+Welcome, <%= current_user.name %> | <%= link_to "Logout", "/log_out" %>
+<% else %>
+<%= link_to "Log in!", log_in_path %>
+<% end%>
+</div>
+</div>
+<%= yield %>
+</body>
+</html>

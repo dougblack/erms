@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @resource.name %>
+</p>
+
+<p>
+  <b>Model:</b>
+  <%= @resource.model %>
+</p>
+
+<p>
+  <b>Cost:</b>
+  <%= @resource.cost %>
+</p>
+
+<p>
+  <b>Lat:</b>
+  <%= @resource.lat %>
+</p>
+
+<p>
+  <b>Lon:</b>
+  <%= @resource.lon %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @resource.user %>
+</p>
+
+<p>
+  <b>Esf:</b>
+  <%= @resource.esf %>
+</p>
+
+<p>
+  <b>Costperitem:</b>
+  <%= @resource.costperitem %>
+</p>
+
+
+<%= link_to 'Edit', edit_resource_path(@resource) %> |
+<%= link_to 'Back', resources_path %>

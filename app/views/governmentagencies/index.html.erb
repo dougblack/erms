@@ -1,0 +1,25 @@
+<h1>Listing governmentagencies</h1>
+
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Jurisdiction</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @governmentagencies.each do |governmentagency| %>
+  <tr>
+    <td><%= governmentagency.username %></td>
+    <td><%= governmentagency.jurisdiction %></td>
+    <td><%= link_to 'Show', governmentagency %></td>
+    <td><%= link_to 'Edit', edit_governmentagency_path(governmentagency) %></td>
+    <td><%= link_to 'Destroy', governmentagency, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Governmentagency', new_governmentagency_path %>

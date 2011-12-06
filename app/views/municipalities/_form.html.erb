@@ -1,0 +1,25 @@
+<%= form_for(@municipality) do |f| %>
+  <% if @municipality.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@municipality.errors.count, "error") %> prohibited this municipality from being saved:</h2>
+
+      <ul>
+      <% @municipality.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :population %><br />
+    <%= f.number_field :population %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Resource:</b>
+  <%= @capability.resource %>
+</p>
+
+<p>
+  <b>Capability:</b>
+  <%= @capability.capability %>
+</p>
+
+
+<%= link_to 'Edit', edit_capability_path(@capability) %> |
+<%= link_to 'Back', capabilities_path %>

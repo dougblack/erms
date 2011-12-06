@@ -1,0 +1,24 @@
+<h1>Search result</h1>
+<% @i = @final_result[0]; %>
+<% @results = @final_result[1] %>
+<%= @i.description if !@i.blank? %>
+<table>
+<tr>
+	<th>Name</th>
+	<th>Model</th>
+	<th>Cost</th>
+	<th>Distance</th>
+	<th>Owner</th>
+	<th>Action</th>
+</tr>
+<% @results.each do |r| %>
+<tr>
+<td><%= r.name %></td>
+<td><%= r.model %></td>
+<td><%= "#{r.cost} per #{r.costperitem.item}" %></td>
+<td><%= "<#{r.lat}, #{r.lon}>" %></td>
+<td><%= r.user.name %></td>
+<td><%= link_to "Deploy", "/requests/new" %></td>
+</tr>
+<% end %>
+</table>

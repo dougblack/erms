@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  model: MyString
+  cost: 1
+  lat: 1.5
+  lon: 1.5
+  user: 
+  esf: 
+  costperitem: 
+
+two:
+  name: MyString
+  model: MyString
+  cost: 1
+  lat: 1.5
+  lon: 1.5
+  user: 
+  esf: 
+  costperitem: 
