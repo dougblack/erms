@@ -22,9 +22,9 @@
     <td><%= resource.cost %></td>
     <td><%= resource.lat %></td>
     <td><%= resource.lon %></td>
-    <td><%= resource.user %></td>
-    <td><%= resource.esf %></td>
-    <td><%= resource.costperitem %></td>
+    <td><%= resource.user.name %></td>
+    <td><%= resource.esf.description %></td>
+    <td><%= resource.costperitem.item %></td>
     <td><%= link_to 'Show', resource %></td>
     <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
     <td><%= link_to 'Destroy', resource, confirm: 'Are you sure?', method: :delete %></td>

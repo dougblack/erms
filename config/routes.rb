@@ -5,6 +5,12 @@ Erms::Application.routes.draw do
     get "log_out" => "sessions#destroy", :as => "log_out"
     get "/resources/search" => "resources#search", :as => "search"
     get "/resources/status" => "resources#status", :as => "status"
+    get "/resources/report" => "resources#report", :as => "report"
+    match "/requests/deploy" => "requests#deploy", :as => "deploy"
+    match "/requests/deploy_request" => "requests#deploy_request", :as => "deploy_request"
+    match "/requests/make_request" => "requests#make_request", :as => "make_request"
+    match "/requests/return" => "requests#return", :as => "return"
+    match "/requests/reject" => "requests#reject", :as => "reject"
     match "/resources/search_results" => "resources#search_results", :as => "search_results"
     resources :sessions    
     resources :users

@@ -12,33 +12,37 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :model %><br />
+    <%= f.label :model %>
     <%= f.text_field :model %>
   </div>
   <div class="field">
-    <%= f.label :cost %><br />
-    <%= f.number_field :cost %>
+    <%= f.label :cost %>
+    <%= f.number_field :cost %> per <%= f.text_field :costperitem%>
   </div>
   <div class="field">
-    <%= f.label :lat %><br />
+    <%= f.label :lat %>
     <%= f.text_field :lat %>
   </div>
   <div class="field">
-    <%= f.label :lon %><br />
+    <%= f.label :lon %>
     <%= f.text_field :lon %>
   </div>
   <div class="field">
-    <%= f.label :esf %><br />
+    <%= f.label "Primary ESF" %>
     <%= f.select(:esf_id, Esf.all.collect {|e| [e.description, e.id]} ) %>
   </div>
   <div class="field">
-    <%= f.label :costperitem %><br />
-    <%= f.text_field :costperitem %>
-  </div>
+		<%= f.label "Additional ESFs" %><br />
+		<%= select_tag 'add_esfs[]', options_for_select(Esf.all.collect {|e| [e.description, e.id]}), :multiple=> true, :size => 6 %>
+	</div>
+	<%= f.fields_for :capabilities do |builder| %>
+		<%= render "capability_fields", :f => builder %>
+	<% end %>
+	<p><%= link_to_add_fields "Add Capability", f, :capabilities %></p><br />
   <div class="actions">
     <%= f.submit %>
   </div>

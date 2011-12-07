@@ -1,4 +1,71 @@
 class RequestsController < ApplicationController
+  
+  
+    def make_request
+        puts params
+        r = Request.new
+        r.resource_id = params[:r_id]
+        r.incident_id = params[:i_id]
+        if current_user.id == Resource.find_by_id(params[:r_id]).user_id
+            r.status = "In Use"
+        else
+            r.status = "Requested"
+        end
+        if r.save
+            redirect_to "/resources/status", :notice => "Successfully requested"
+        else
+            redirect_to "/resources/status", :notice => "Error requesting"
+        end
+    end
+    def deploy
+        puts params
+        r = Request.new
+        r.resource_id = params[:r_id]
+        r.incident_id = params[:i_id]
+        r.status = "In Use"
+        if r.save
+            redirect_to "/resources/status", :notice => "Successfully deployed"
+        else
+            redirect_to "/resources/status", :notice => "Error deploying"
+        end
+    end
+    
+    def return
+        rq = Request.find_by_id(params[:rq_id])
+        @i_id = rq.incident_id
+        @r_id = rq.resource_id
+        rq.destroy
+        Request.find(:all, :order => "created_at ASC").each do |rq|
+            if rq.i_id == @i_id && rq.r_id == @r_id && rq.status = "Requested"
+                rq.status = "In Use"
+                if rq.save
+                    redirect_to "/resources/status", :notice => "Successfully returned"
+                else
+                    redirect_to "/resources/status", :notice => "Error returning"
+                end
+            end
+        end
+        
+        redirect_to "/", :notice => "Successfully returned"
+
+    end
+    def reject
+        Request.find_by_id(params[:id]).destroy
+    end
+    def deploy_request
+        rq = Request.find_by_id(params[:id])
+        rq.status = "In Use"
+        if rq.save
+            redirect_to "/resources/status", :notice => "Successfully requested"
+        else
+            redirect_to "/resources/status", :notice => "Error requesting"
+        end
+    end
+  
+  
+  
+  
+  
   # GET /requests
   # GET /requests.json
   def index

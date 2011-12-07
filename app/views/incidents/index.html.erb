@@ -4,8 +4,10 @@
   <tr>
     <th>This date</th>
     <th>Description</th>
-    <th></th>
-    <th></th>
+    <th>Latitude</th>
+    <th>Longitude</th>
+	<th></th>
+	<th></th>
     <th></th>
   </tr>
 
@@ -13,6 +15,8 @@
   <tr>
     <td><%= incident.this_date %></td>
     <td><%= incident.description %></td>
+	<td><%= incident.lat %></td>
+	<td><%= incident.lon %></td>
     <td><%= link_to 'Show', incident %></td>
     <td><%= link_to 'Edit', edit_incident_path(incident) %></td>
     <td><%= link_to 'Destroy', incident, confirm: 'Are you sure?', method: :delete %></td>

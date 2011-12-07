@@ -2,23 +2,36 @@
 <% @i = @final_result[0]; %>
 <% @results = @final_result[1] %>
 <%= @i.description if !@i.blank? %>
+<% inuse = false %>
 <table>
 <tr>
 	<th>Name</th>
-	<th>Model</th>
-	<th>Cost</th>
-	<th>Distance</th>
 	<th>Owner</th>
-	<th>Action</th>
+	<th>Cost</th>
+	<% if !@i.blank? %>
+		<th>Distance</th>
+		<th>In Use?</th>
+		<th>Action</th>
+	<% end %>
 </tr>
 <% @results.each do |r| %>
-<tr>
-<td><%= r.name %></td>
-<td><%= r.model %></td>
-<td><%= "#{r.cost} per #{r.costperitem.item}" %></td>
-<td><%= "<#{r.lat}, #{r.lon}>" %></td>
-<td><%= r.user.name %></td>
-<td><%= link_to "Deploy", "/requests/new" %></td>
-</tr>
+	<tr>
+		<td><%= r.name %></td>
+		<td><%= r.user.name %></td>
+		<td><%= "#{r.cost} per #{r.costperitem.item}" %></td>
+		<% if !@i.blank? %>
+			<td><%= r.distanceFrom(@i) %></td>
+			<% if r.inUse? %>
+				<td>Yes</td>
+			<% else %>
+				<td>No</td>
+			<% end %>
+			<% if r.user_id == current_user.id %>
+				<td><%= link_to "Deploy", deploy_path(:r_id => r.id, :i_id => @i.id)%></td>
+			<% else %>
+				<td><%= link_to "Request", make_request_path(:r_id => r.id, :i_id => @i.id ) %></td>
+			<% end %>
+	<% end %>
+	</tr>
 <% end %>
 </table>

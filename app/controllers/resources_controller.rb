@@ -2,37 +2,126 @@ class ResourcesController < ApplicationController
   before_filter :check_login
 
   def search
+      @incidents = current_user.incidents
   end
-
+  
+  def report
+      @esfs = Esf.all
+  end
+  
+  def status
+      puts "Hi"
+      @user_resource_requests = []
+      @user_resources = []
+      @user_incidents = []
+      @user_resource_requests = []
+      @requests_sent = []
+      @requests_received = []
+      @user_resources = current_user.resources
+      puts "Resources: #{@user_resources}"
+      @user_incidents = current_user.incidents
+      puts "Incidents: #{@user_incidents}"
+      # All requests where the user owns the incident and the incident is in use
+      @user_incidents.each do |i|
+              Request.where(:incident_id => i.id).each do |rq|
+                  if rq.status == "In Use"
+                      @user_resource_requests << rq
+                  end
+              end
+      end
+      # All requests where the incident is user owned and not in use
+      @user_incidents.each do |i|
+              Request.where(:incident_id => i.id).each do |rq|
+                  if rq.status == "Requested"
+                      @requests_sent << rq
+                  end
+              end
+      end
+      # All requests where the users resources are involved
+      @user_resources.each do |r|
+          Request.where(:resource_id => r.id).each do |rq|
+              if rq.status == "Requested"
+                  @requests_received << rq
+              end
+          end
+      end
+  end
   def search_results
 
-    keyword = params[:keyword]
+    keyword = params[:keyword].downcase
     esf_id = params[:all][:esf_id]
     distance = params[:distance]
     incident_id = params[:all][:incident_id]
+    @results = []
     if !keyword.blank? || !esf_id.blank? || !distance.blank? || !incident_id.blank?
-       (!esf_id.blank?) ? @first = Resource.where(:esf_id => esf_id) : @first = nil
-       (@first) ? @second = @first.where('name LIKE ? or model LIKE ?', "%#{keyword}%", "%#{keyword}%") : @second = Resource.where('name LIKE ? or model LIKE ?', "%#{keyword}%", "%#{keyword}%")
+       if !esf_id.blank?
+           @first = Resource.where(:esf_id => esf_id)
+           Addesf.where(:esf_id => esf_id).each do |a|
+               puts "adding one"
+               @first << Resource.where(:id => a.resource_id).first
+           end
+       else
+            @first = nil
+       end
+       if !keyword.blank?
+           @second = []
+           if @first 
+               @first.each do |r|
+                   if r.name.downcase.index(keyword) or r.model.downcase.index(keyword)
+                       @second << r
+                   else 
+                       puts "Checking capabilities"
+                       r.capabilities.each do |c|
+                           if c.capability.index(keyword)
+                               @second << r
+                               break
+                           end
+                       end
+                   end
+               end
+               
+           else
+               Resource.all.each do |r|
+                      if r.name.downcase.index(keyword) or r.model.downcase.index(keyword)
+                            @second << r
+                        else 
+                            r.capabilities.each do |c|
+                                puts "Checking capabilities2"
+                                if c.capability.downcase.index(keyword)
+                                    @second << r
+                                    break
+                                end
+                            end
+                        end
+                  end
+           end
+       else
+           @second = @first
+       end
        if !incident_id.blank? and !distance.blank?
              @i = Incident.find_by_id(incident_id)
              if @second
+                 @results = []
                  @second.each do |r|
                      (r.distanceFrom(@i) < distance.to_i) ? @results << r : 1+1
                   end
              else
-                 @results = Resource.where(distanceFrom(@i) < distance.to_i).all
+                 Resource.all.each do |r|
+                   if r.distanceFrom(@i) < distance.to_i
+                     puts "Found resources!"
+                     puts r.name
+                     @results << r
+                   end
+                 end
              end
        else
-             @results = @second.all
+             @results = @second
        end
     else
        @results = Resource.find(:all)
     end
     @final_result = [@i, @results]
   end
-  def status
-    @user = current_user
-  end 
 
   # GET /resources
   # GET /resources.json
@@ -60,7 +149,10 @@ class ResourcesController < ApplicationController
   # GET /resources/new.json
   def new
     @resource = Resource.new
-
+    3.times {
+        @resource.capabilities.build
+    }
+    puts @resource.capabilities
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @resource }
@@ -77,15 +169,21 @@ class ResourcesController < ApplicationController
   def create
     @costperitem = Costperitem.where(item: params[:resource][:costperitem]).first
     if @costperitem
-        params[:resource][:costperitem] = @costperitem.id
+        params[:resource][:costperitem] = @costperitem
     else
-        params[:resource][:costperitem] = Costperitem.create(item: params[:costperitem])
+        @new_cost = Costperitem.new
+        @new_cost.item = params[:resource][:costperitem]
+        @new_cost.save
+        params[:resource][:costperitem] = @new_cost
     end
     params[:resource][:user_id] = current_user
     @resource = Resource.new(params[:resource])
 
     respond_to do |format|
       if @resource.save
+        params[:add_esfs].each do |e|
+              e = Addesf.create(:resource_id => @resource.id, :esf_id => e.to_i)
+        end
         format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
         format.json { render json: @resource, status: :created, location: @resource }
       else
