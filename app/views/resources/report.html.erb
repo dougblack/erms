@@ -1,0 +1,21 @@
+<table>
+	<tr>
+		<th>#</th>
+		<th>Primary Emergency Support Function</th>
+		<th>Total Resources</th>
+		<th>Resources in Use</th>
+	</tr>
+	<% @esfs.each do |esf| %>
+		<tr>
+			<td><%= esf.id %></td>
+			<td><%= esf.description %></td>
+			<td><%= Resource.where(:esf_id => esf.id).size %></td>
+			<td><% count = 0; Request.all.each do |rq|%>
+				<% if rq.status == "In Use" && Resource.find_by_id(rq.resource_id).esf_id == esf.id %>
+					<% count = count + 1 %>
+					<% end %>
+					<% end %>
+					<%= count %></td>
+		</tr>
+		<% end %>
+</table>
