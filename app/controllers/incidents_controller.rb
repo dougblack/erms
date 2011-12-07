@@ -3,7 +3,7 @@ class IncidentsController < ApplicationController
   # GET /incidents
   # GET /incidents.json
   def index
-    @incidents = Incident.all
+    @incidents = Incident.find_by_sql("SELECT * FROM incidents")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -45,7 +45,7 @@ class IncidentsController < ApplicationController
     @incident.user_id = current_user.id
     respond_to do |format|
       if @incident.save
-        format.html { redirect_to @incident, notice: 'Incident was successfully created.' }
+        format.html { redirect_to root_url, notice: 'Incident was successfully created.' }
         format.json { render json: @incident, status: :created, location: @incident }
       else
         format.html { render action: "new" }
@@ -77,7 +77,7 @@ class IncidentsController < ApplicationController
     @incident.destroy
 
     respond_to do |format|
-      format.html { redirect_to incidents_url }
+      format.html { redirect_to root_url }
       format.json { head :ok }
     end
   end

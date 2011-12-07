@@ -6,7 +6,7 @@ class RequestsController < ApplicationController
         r = Request.new
         r.resource_id = params[:r_id]
         r.incident_id = params[:i_id]
-        if current_user.id == Resource.find_by_id(params[:r_id]).user_id
+        if current_user.id == Resource.find_by_sql("SELECT * FROM resources WHERE id = #{params[:r_id]}").first.user_id
             r.status = "In Use"
         else
             r.status = "Requested"
@@ -31,11 +31,11 @@ class RequestsController < ApplicationController
     end
     
     def return
-        rq = Request.find_by_id(params[:rq_id])
+        rq = Request.find_by_sql("SELECT * FROM requests WHERE #{params[:rq_id]}").first
         @i_id = rq.incident_id
         @r_id = rq.resource_id
         rq.destroy
-        Request.find(:all, :order => "created_at ASC").each do |rq|
+        Request.find_byB_sql("SELECT * FROM requests ORDER BY created_at ASC").each do |rq|
             if rq.i_id == @i_id && rq.r_id == @r_id && rq.status = "Requested"
                 rq.status = "In Use"
                 if rq.save
@@ -50,7 +50,7 @@ class RequestsController < ApplicationController
 
     end
     def reject
-        Request.find_by_id(params[:id]).destroy
+        Request.find_by_sql("SELECT * FROM requests WHERE id = #{params[:id]}").first.destroy
     end
     def deploy_request
         rq = Request.find_by_id(params[:id])

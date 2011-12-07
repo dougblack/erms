@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
 	end
 
 	def create
-		current_user = User.where(:username => params["username"]).first
+		current_user = User.find_by_sql("SELECT * FROM users WHERE username = '#{params["username"]}'").first
 		if current_user && current_user.password == params["password"]
 			session[:user_id] = current_user.id
 			redirect_to root_url, notice: "Logged in!"

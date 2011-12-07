@@ -23,28 +23,26 @@ class ResourcesController < ApplicationController
       puts "Incidents: #{@user_incidents}"
       # All requests where the user owns the incident and the incident is in use
       @user_incidents.each do |i|
-              Request.where(:incident_id => i.id).each do |rq|
-                  if rq.status == "In Use"
-                      @user_resource_requests << rq
-                  end
-              end
+              @user_resource_requests = @user_resource_requests + Request.find_by_sql("SELECT * FROM requests WHERE incident_id = #{i.id} AND status = 'In Use'")
+             
+              #     if rq.status == "In Use"
+              #         puts "Added: #{rq}"
+              #         puts rq.name
+              #          << rq
+              #     end
+              # end
       end
       # All requests where the incident is user owned and not in use
       @user_incidents.each do |i|
-              Request.where(:incident_id => i.id).each do |rq|
-                  if rq.status == "Requested"
-                      @requests_sent << rq
-                  end
-              end
+              @requests_sent = @requests_sent + Request.find_by_sql("SELECT * FROM requests WHERE incident_id = #{i.id} AND status = 'Requested'")
       end
       # All requests where the users resources are involved
       @user_resources.each do |r|
-          Request.where(:resource_id => r.id).each do |rq|
-              if rq.status == "Requested"
-                  @requests_received << rq
-              end
-          end
+            @requests_received = @requests_received + Request.find_by_sql("SELECT * FROM requests WHERE incident_id = #{r.id} AND status = 'Requested'")
       end
+       puts "user #{@user_resource_requests}"
+       puts "sent #{@requests_sent}"
+       puts "received #{@requests_received}"
   end
   def search_results
 
@@ -55,10 +53,10 @@ class ResourcesController < ApplicationController
     @results = []
     if !keyword.blank? || !esf_id.blank? || !distance.blank? || !incident_id.blank?
        if !esf_id.blank?
-           @first = Resource.where(:esf_id => esf_id)
-           Addesf.where(:esf_id => esf_id).each do |a|
+           @first = Resource.find_by_sql("SELECT * FROM resources WHERE esf_id = #{esf_id}")
+           Addesf.find_by_sql("SELECT * FROM addesfs WHERE esf_id = #{esf_id}").each do |a|
                puts "adding one"
-               @first << Resource.where(:id => a.resource_id).first
+               @first << Resource.find_by_sql("SELECT * FROM resources WHERE id = #{a.resource_id}").first
            end
        else
             @first = nil
@@ -99,7 +97,7 @@ class ResourcesController < ApplicationController
            @second = @first
        end
        if !incident_id.blank? and !distance.blank?
-             @i = Incident.find_by_id(incident_id)
+             @i = Incident.find_by_sql("SELECT * FROM incidents WHERE id = #{incident_id}").first
              if @second
                  @results = []
                  @second.each do |r|
@@ -118,7 +116,7 @@ class ResourcesController < ApplicationController
              @results = @second
        end
     else
-       @results = Resource.find(:all)
+       @results = Resource.find_by_sql("SELECT * FROM resources")
     end
     @final_result = [@i, @results]
   end
