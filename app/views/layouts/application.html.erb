@@ -19,6 +19,9 @@ Welcome, <%= current_user.name %> | <%= link_to "Logout", "/log_out" %>
 <% if current_user %>
 <%= current_user.info %>
 <% end %>
+<% if params[:notice] %>
+<%= params[:notice] %>
+<% end %>
 <%= yield %>
 </body>
 </html>

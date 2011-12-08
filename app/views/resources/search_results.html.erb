@@ -3,6 +3,7 @@
 <% @results = @final_result[1] %>
 <%= @i.description if !@i.blank? %>
 <% inuse = false %>
+<% if @results %>
 <table>
 <tr>
 	<th>Name</th>
@@ -35,3 +36,6 @@
 	</tr>
 <% end %>
 </table>
+<% else %>
+No search results
+<% end %>

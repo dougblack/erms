@@ -31,11 +31,11 @@ class RequestsController < ApplicationController
     end
     
     def return
-        rq = Request.find_by_sql("SELECT * FROM requests WHERE #{params[:rq_id]}").first
+        rq = Request.find_by_sql("SELECT * FROM requests WHERE id = #{params[:rq_id]}").first
         @i_id = rq.incident_id
         @r_id = rq.resource_id
         rq.destroy
-        Request.find_byB_sql("SELECT * FROM requests ORDER BY created_at ASC").each do |rq|
+        Request.find_by_sql("SELECT * FROM requests ORDER BY created_at ASC").each do |rq|
             if rq.i_id == @i_id && rq.r_id == @r_id && rq.status = "Requested"
                 rq.status = "In Use"
                 if rq.save

@@ -184,10 +184,10 @@ class ResourcesController < ApplicationController
       if @resource.save
         if params[:add_esfs]
             params[:add_esfs].each do |e|
-              e = Addesf.create(:resource_id => @resource.id, :esf_id => e.to_i)
+              Addesf.create(:resource_id => @resource.id, :esf_id => e.to_i) unless e.to_i == params[:resource][:esf_id].to_i
             end
         end
-        format.html { redirect_to root_url, notice: 'Resource was successfully created.' }
+        format.html { redirect_to root_path( notice: 'Resource was successfully created.') }
         format.json { render json: root_url, status: :created, location: @resource }
       else
         format.html { render action: "new" }
