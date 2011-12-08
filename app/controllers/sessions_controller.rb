@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
 	
 	def new
+            puts "Log in called"
 	end
 
 	def create

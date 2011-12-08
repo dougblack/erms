@@ -1,5 +1,4 @@
 class ResourcesController < ApplicationController
-  before_filter :check_login
 
   def search
       @incidents = current_user.incidents
@@ -55,8 +54,11 @@ class ResourcesController < ApplicationController
        if !esf_id.blank?
            @first = Resource.find_by_sql("SELECT * FROM resources WHERE esf_id = #{esf_id}")
            Addesf.find_by_sql("SELECT * FROM addesfs WHERE esf_id = #{esf_id}").each do |a|
-               puts a
-               @first << Resource.find_by_sql("SELECT * FROM resources WHERE id = #{a.resource_id}").first
+
+               puts a.resource_id
+               r_id = a.resource_id
+               resource = Resource.find_by_sql("SELECT * FROM resources WHERE id = #{r_id}").first
+               @first << resource unless resource == nil
            end
        else
             @first = nil
@@ -118,6 +120,7 @@ class ResourcesController < ApplicationController
     else
        @results = Resource.find_by_sql("SELECT * FROM resources")
     end
+    puts "looping through @results: #{@results}"
     @final_result = [@i, @results]
   end
 
@@ -184,8 +187,8 @@ class ResourcesController < ApplicationController
               e = Addesf.create(:resource_id => @resource.id, :esf_id => e.to_i)
             end
         end
-        format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
-        format.json { render json: @resource, status: :created, location: @resource }
+        format.html { redirect_to root_url, notice: 'Resource was successfully created.' }
+        format.json { render json: root_url, status: :created, location: @resource }
       else
         format.html { render action: "new" }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
