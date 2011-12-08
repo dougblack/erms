@@ -5,7 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-User.create(:username => "doug", :name => "Doug", :password => "Precisi0n", :usertype => "Individual")
+User.create(:username => "doug", :name => "Doug", :password => "doug", :usertype => "Individual")
 User.create(:username => "gt", :name => "Georgia Tech", :password => "Go Jackets", :usertype => "Government Agency")
 Governmentagency.create(:username => "gt", :jurisdiction => "Atlanta, GA")
 User.create(:username => "ga", :name => "Georgia", :password => "Atlanta", :usertype => "Municipality")
