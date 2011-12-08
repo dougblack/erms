@@ -55,7 +55,7 @@ class ResourcesController < ApplicationController
        if !esf_id.blank?
            @first = Resource.find_by_sql("SELECT * FROM resources WHERE esf_id = #{esf_id}")
            Addesf.find_by_sql("SELECT * FROM addesfs WHERE esf_id = #{esf_id}").each do |a|
-               puts "adding one"
+               puts a
                @first << Resource.find_by_sql("SELECT * FROM resources WHERE id = #{a.resource_id}").first
            end
        else
@@ -179,8 +179,10 @@ class ResourcesController < ApplicationController
 
     respond_to do |format|
       if @resource.save
-        params[:add_esfs].each do |e|
+        if params[:add_esfs]
+            params[:add_esfs].each do |e|
               e = Addesf.create(:resource_id => @resource.id, :esf_id => e.to_i)
+            end
         end
         format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
         format.json { render json: @resource, status: :created, location: @resource }
