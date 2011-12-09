@@ -3,7 +3,7 @@
 <% @results = @final_result[1] %>
 <%= @i.description if !@i.blank? %>
 <% inuse = false %>
-<% if @results %>
+<% if !@results.blank? %>
 <table>
 <tr>
 	<th>Name</th>
@@ -38,4 +38,5 @@
 </table>
 <% else %>
 No search results
-<% end %>
+<% end %><br />
+<%= link_to "Search again", "/resources/search" %>

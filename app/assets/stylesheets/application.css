@@ -95,6 +95,7 @@ a:active {
 #container {
 	padding-top: 10px;
 	padding-left: 10px;
+	padding-right: 10px;
 }
 
 input[type=text] {
@@ -174,7 +175,8 @@ th {
     font-size: 13px;
     font-weight: bold;
     padding: 8px;
-    background: #474747;
+	background-color: #b10000;
+    /background: #474747;
     border-bottom: 1px solid #fff;
     color: #fff;
 }
