@@ -21,7 +21,7 @@
 		<td><%= r.user.name %></td>
 		<td><%= "#{r.cost} per #{r.costperitem.item}" %></td>
 		<% if !@i.blank? %>
-			<td><%= r.distanceFrom(@i) %></td>
+			<td><%= r.distanceFrom(@i) %> km</td>
 			<% if r.inUse? %>
 				<td>Yes</td>
 			<% else %>

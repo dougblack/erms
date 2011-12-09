@@ -37,7 +37,7 @@ class ResourcesController < ApplicationController
       end
       # All requests where the users resources are involved
       @user_resources.each do |r|
-            @requests_received = @requests_received + Request.find_by_sql("SELECT * FROM requests WHERE incident_id = #{r.id} AND status = 'Requested'")
+            @requests_received = @requests_received + Request.find_by_sql("SELECT * FROM requests WHERE resource_id = #{r.id}")
       end
        puts "user #{@user_resource_requests}"
        puts "sent #{@requests_sent}"
