@@ -13,7 +13,7 @@
         </div>
         <div id="loginarea">
             <% if current_user %>
-                Welcome, <%= current_user.name %> | <%= link_to "Logout", "/log_out" %>
+                Welcome, <%= current_user.name %>
             <% else %>
                 <%= link_to "Log in!", log_in_path %>
             <% end%>
@@ -24,13 +24,16 @@
         </div>
 
     </div>
-		<div style="border: 5px black; background-color: rgb(255,100,100); font-weight: bold;">
-        <% if params[:notice] %>
+        <% if !params[:notice].blank? %>
+		<div style="font-size: 18px; padding-top: 5px; padding-bottom: 5px; margin: auto; border: solid 1px black; background-color: rgb(255,100,100); font-weight: bold;">
             <%= params[:notice] %>
+            </div>
         <% end %>
-		</div>
 <div id="container">
 <%= yield %>
+</div>
+<div id="footer">
+ Doug Black, Obi Igwe, Patrick Koehler, Stefan Ferguson<br /><br /> 2011
 </div>
 </body>
 </html>

@@ -13,27 +13,27 @@
 
   <div class="field">
     RESOURCE:<BR />
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :size => 20 %>
   </div>
   <div class="field">
     MODEL:<BR />
-    <%= f.text_field :model %>
+    <%= f.text_field :model, :size => 20 %>
   </div>
   <div class="field">
     COST:<BR />
-    $<%= f.number_field :cost %> per <%= f.text_field :costperitem%>
+    $<%= f.number_field :cost, :size => 8 %> per <%= f.text_field :costperitem, :size => 10 %>
   </div>
   <div class="field">
-    LATITUDE:<BR />
-    <%= f.text_field :lat %>
+    LATITUDE:<br />
+    <%= f.text_field :lat, :size => 20 %> 
   </div>
-  <div class="field">
-    LONGITUDE:<BR />
-    <%= f.text_field :lon %>
+  <div class ="field">
+    LONGITUDE:<br />
+    <%= f.text_field :lon, :size => 20 %>
   </div>
   <div class="field">
     PRIMARY ESF:<BR />
-    <%= f.select(:esf_id, Esf.all.collect {|e| [e.description, e.id]} ) %>
+    <%= f.select(:esf_id, Esf.all.collect {|e| [e.description, e.id]}, :prompt => "--Select a primary ESF--" ) %>
   </div>
   <div class="field">
 		ADDITIONAL ESFS: <BR />
@@ -42,7 +42,7 @@
 	<%= f.fields_for :capabilities do |builder| %>
 		<%= render "capability_fields", :f => builder %>
 	<% end %>
-	<p><%= link_to_add_fields "Add Capability", f, :capabilities %></p><br />
+	<div class="field"><%= link_to_add_fields "ADD CAPABILITY", f, :capabilities %></div><br />
   <div class="actions">
     <%= f.submit %>
   </div>
