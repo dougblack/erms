@@ -56,7 +56,12 @@ No resource requests
 		<td><%= Resource.find_by_sql("SELECT * FROM resources WHERE id = #{rq.resource_id}").first.name %></td>
 		<td><%= Incident.find_by_sql("SELECT * FROM incidents WHERE id = #{rq.incident_id}").first.description %></td>
 		<td><%= Incident.find_by_sql("SELECT * FROM incidents WHERE id = #{rq.incident_id}").first.user_id %></td>
-		<td><%= link_to "Deploy", deploy_request_path(:id => rq.id) %></td>
+		<td>
+		<% if rq.status == "In Use" %>
+			Currently in Use
+			<% else %>
+			<%= link_to "Deploy", deploy_request_path(:id => rq.id) %>
+			<% end %></td>
 		<td><%= link_to "Reject", reject_path(:rq_id => rq.id) %></td>
 	</tr>
 <% end %>
