@@ -10,19 +10,20 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :lat %>
-    <%= f.text_field :lat %>
-    <%= f.label :lon %>
-    <%= f.text_field :lon %>
-  </div>
-  <div class="field">
-    <%= f.label :description %>
+	<div class="field">
+    DESCRIPTION:<BR/>
     <%= f.text_field :description %>
   </div>
   <div class="field">
-    <%= f.label "Date" %>
+		LATITUDE:<BR />
+    <%= f.text_field :lat %>
+  </div>
+	<div class="field">
+    LONGITUDE:<BR />
+    <%= f.text_field :lon %>
+	</div>
+  <div class="field">
+    DATE:<BR />
     <%= f.datetime_select :this_date %>
   </div>
   <div class="actions">

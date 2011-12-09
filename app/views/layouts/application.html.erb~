@@ -18,19 +18,14 @@
                 <%= link_to "Log in!", log_in_path %>
             <% end%>
             <br />
-            <% if current_user %>
-                <%= current_user.info %>
-            <% end %>
-        </div>
-
-    </div>
-		<div style="border: 5px black; background-color: rgb(255,100,100); font-weight: bold;">
+        <% if current_user %>
+        <%= current_user.info %>
+        <% end %>
         <% if params[:notice] %>
             <%= params[:notice] %>
         <% end %>
-		</div>
-<div id="container">
+    </div>
+    </div>
 <%= yield %>
-</div>
 </body>
 </html>

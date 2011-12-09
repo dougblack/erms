@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
        elsif self.usertype == "Government Agency"
            return "Jurisdiction: #{Governmentagency.find_by_sql("SELECT governmentagencies.* FROM governmentagencies WHERE governmentagencies.username = '#{self.username}' LIMIT 1").first.jurisdiction}"
        else
-           return ""
+           return "Individual"
        end
     end
 end

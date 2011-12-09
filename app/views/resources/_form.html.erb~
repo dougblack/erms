@@ -12,31 +12,31 @@
   <% end %>
 
   <div class="field">
-    RESOURCE:<BR />
+    <%= f.label "Resource:" %>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    MODEL:<BR />
+    <%= f.label "Model: " %>
     <%= f.text_field :model %>
   </div>
   <div class="field">
-    COST:<BR />
+    <%= f.label :cost %>
     $<%= f.number_field :cost %> per <%= f.text_field :costperitem%>
   </div>
   <div class="field">
-    LATITUDE:<BR />
+    <%= f.label :lat %>
     <%= f.text_field :lat %>
   </div>
   <div class="field">
-    LONGITUDE:<BR />
+    <%= f.label :lon %>
     <%= f.text_field :lon %>
   </div>
   <div class="field">
-    PRIMARY ESF:<BR />
+    <%= f.label "Primary ESF" %>
     <%= f.select(:esf_id, Esf.all.collect {|e| [e.description, e.id]} ) %>
   </div>
   <div class="field">
-		ADDITIONAL ESFS: <BR />
+		<%= f.label "Additional ESFs" %><br />
 		<%= select_tag 'add_esfs[]', options_for_select(Esf.all.collect {|e| [e.description, e.id]}), :multiple=> true, :size => 6 %>
 	</div>
 	<%= f.fields_for :capabilities do |builder| %>

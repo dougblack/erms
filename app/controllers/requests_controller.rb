@@ -50,7 +50,8 @@ class RequestsController < ApplicationController
 
     end
     def reject
-        Request.find_by_sql("SELECT * FROM requests WHERE id = #{params[:id]}").first.destroy
+        Request.find_by_sql("SELECT * FROM requests WHERE id = #{params[:rq_id]}").first.destroy
+        redirect_to "/resources/status", :notice => "Successfully destroyed"
     end
     def deploy_request
         rq = Request.find_by_id(params[:id])
