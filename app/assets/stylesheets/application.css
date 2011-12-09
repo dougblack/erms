@@ -72,8 +72,8 @@ a:active {
 /*CUSTOM*/
 #header {
     padding-top: 30px;
-    padding-bottom: 35px;
-    border-bottom: solid 2px gray;
+    padding-bottom: 45px;
+    border-bottom: solid 5px black;
 }
 #loginarea {
     float: right;
@@ -82,20 +82,23 @@ a:active {
 #title {
     font-size: 30px;
     float: left;
-    color: #b40b0b;
+    color: #b10000;
 }
 
 #homecontainer {
-	padding-top: 150px;
+	border: solid 5px black;
+	margin-top: 150px;
+	margin-left: 130px;
+	margin-right: 130px;
 	text-align: center;
 	font-size:25px;
 	line-height:2
 }
 
 #container {
-	padding-top: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 input[type=text] {
