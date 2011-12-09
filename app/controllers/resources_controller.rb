@@ -150,10 +150,6 @@ class ResourcesController < ApplicationController
   # GET /resources/new.json
   def new
     @resource = Resource.new
-    3.times {
-        @resource.capabilities.build
-    }
-    puts @resource.capabilities
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @resource }
