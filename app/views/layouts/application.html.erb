@@ -14,8 +14,6 @@
         <div id="loginarea">
             <% if current_user %>
                 Welcome, <div style="color: #b10000; display: inline;"><%= current_user.name %></div>
-            <% else %>
-                <%= link_to "Log in!", log_in_path %>
             <% end%>
             <br />
             <% if current_user %>

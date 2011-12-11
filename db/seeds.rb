@@ -42,6 +42,8 @@ Resource.create(:name => "Stinger", :model => "Bus", :esf_id => "1", :cost => "8
 Resource.create(:name => "Police", :model => "GT Campus police", :esf_id => "12", :cost => "10000", :costperitem_id => "4", :lat => "10", :lon => "10", :user_id => "2")
 Capability.create(:resource_id => "4", :capability => "Looks badass")
 Addesf.create(:esf_id => "9", :resource_id => "3")
+Addesf.create(:esf_id => "10", :resource_id => "3")
+Addesf.create(:esf_id => "11", :resource_id => "3")
 Incident.create(:description => "Classes are way too hard", :lat => "10", :lat => "10", :this_date => "Fri, 09 Dec 2011 15:12:00 UTC +00:00", :user_id => "2")
 
 User.create(:username => "ga", :name => "Georgia", :password => "ga", :usertype => "Municipality")
@@ -53,4 +55,3 @@ User.create(:username => "gp", :name => "Georgia Power", :password => "gp", :use
 Company.create(:username => "gp", :headquarters => "Atlanta, GA")
 Costperitem.create(:item => "A whole lot of power")
 Resource.create(:name => "Power", :model => "Coal power :(", :esf_id => "11", :cost => "30000", :costperitem_id => "5", :lat => "20", :lon => "20", :user_id => "4")
-

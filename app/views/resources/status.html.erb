@@ -11,7 +11,7 @@
 	<tr>
 		<td><%= Resource.find_by_sql("SELECT * FROM resources WHERE id = #{rq.resource_id}").first.name %></td>
 		<td><%= Incident.find_by_sql("SELECT * FROM incidents WHERE id = #{rq.incident_id}").first.description %></td>
-		<td><%= Incident.find_by_sql("SELECT * FROM incidents WHERE id = #{rq.incident_id}").first.user_id %></td>
+		<td><%= User.where(:id => Resource.where(:id => rq.resource_id).first.user_id).first.name %></td>
 		<td><%= link_to "Return", return_path(:rq_id => rq.id) %>
 	</tr>
 <% end %>
@@ -33,7 +33,8 @@ No resource requests
 	<tr>
 		<td><%= Resource.find_by_sql("SELECT * FROM resources WHERE id = #{rq.resource_id}").first.name %></td>
 		<td><%= Incident.find_by_sql("SELECT * FROM incidents WHERE id = #{rq.incident_id}").first.description %></td>
-		<td><%= Incident.find_by_sql("SELECT * FROM incidents WHERE id = #{rq.incident_id}").first.user_id %></td>
+
+		<td><%= User.where(:id => Resource.where(:id => rq.resource_id).first.user_id).first.name %></td>
 		<td><%= link_to "Cancel", rq, method: :delete %></td>
 	</tr>
 <% end %>
@@ -55,7 +56,7 @@ No resource requests
 	<tr>
 		<td><%= Resource.find_by_sql("SELECT * FROM resources WHERE id = #{rq.resource_id}").first.name %></td>
 		<td><%= Incident.find_by_sql("SELECT * FROM incidents WHERE id = #{rq.incident_id}").first.description %></td>
-		<td><%= Incident.find_by_sql("SELECT * FROM incidents WHERE id = #{rq.incident_id}").first.user_id %></td>
+		<td><%= User.where(:id => Resource.where(:id => rq.resource_id).first.user_id).first.name %></td>
 		<td>
 		<% if rq.status == "In Use" %>
 			Currently in Use

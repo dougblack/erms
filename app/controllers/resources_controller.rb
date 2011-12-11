@@ -23,13 +23,6 @@ class ResourcesController < ApplicationController
       # All requests where the user owns the incident and the incident is in use
       @user_incidents.each do |i|
               @user_resource_requests = @user_resource_requests + Request.find_by_sql("SELECT * FROM requests WHERE incident_id = #{i.id} AND status = 'In Use'")
-             
-              #     if rq.status == "In Use"
-              #         puts "Added: #{rq}"
-              #         puts rq.name
-              #          << rq
-              #     end
-              # end
       end
       # All requests where the incident is user owned and not in use
       @user_incidents.each do |i|
